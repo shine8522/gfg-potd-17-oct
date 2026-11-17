@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ShineExplains: Balance of x and y</title>
+<style>
+:root{color-scheme:dark;--bg:#0c0d10;--pn:#16181d;--ln:#262a33;--x:#3185FF;--y:#22C55E;--bad:#EF4444;--mu:#9aa0ac;--am:#F59E0B;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:#f4f5f7;font:17px/1.6 ui-sans-serif,system-ui,'Segoe UI',sans-serif}
+nav{position:sticky;top:0;z-index:5;background:#0c0d10ee;backdrop-filter:blur(8px);border-bottom:1px solid var(--ln);padding:10px 16px 0;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+nav b{font-size:18px}nav a{color:var(--mu);text-decoration:none;font-size:14px}nav a:hover,nav a:focus-visible{color:#fff}
+#pg{height:3px;width:100%;margin-top:8px;background:var(--ln)}#pg i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--x),var(--y))}
+#ch{margin-left:auto;font-size:13px;color:var(--mu)}
+main{max-width:900px;margin:0 auto;padding:10px 16px 90px}
+section{padding:46px 0 10px;border-bottom:1px solid var(--ln)}
+h2{font-size:28px;margin:0 0 6px;line-height:1.2}h2 small{display:block;font-size:13px;color:var(--mu);font-weight:500;margin-bottom:4px}
+p{margin:8px 0;color:#d8dbe2}.q{font-size:20px;font-weight:700;color:#fff}
+.panel{background:var(--pn);border:1px solid var(--ln);border-radius:16px;padding:18px;margin:14px 0}
+button,select{font:600 14px ui-sans-serif,system-ui,sans-serif;color:#fff;background:#23262e;border:1px solid #3a3f4b;border-radius:10px;padding:8px 14px;cursor:pointer}
+button:hover{background:#2c303a}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid #fff;outline-offset:2px}button:disabled{opacity:.4;cursor:default}
+button.pri{background:var(--x);border-color:var(--x)}
+input[type=text],textarea{font:inherit;color:#fff;background:#0c0d10;border:1px solid #3a3f4b;border-radius:10px;padding:8px 12px}textarea{width:100%;min-height:60px}
+.str{display:flex;flex-wrap:wrap;gap:4px;margin:14px 0;min-height:76px;align-items:flex-end}
+.ch{font:800 44px/1 ui-monospace,Menlo,Consolas,monospace;padding:8px 10px;border-radius:10px;transition:all .35s}
+.ch.x,.x{color:var(--x)}.ch.y,.y{color:var(--y)}.ch.dim{opacity:.3}
+.ch.cur{background:#ffffff18;transform:translateY(-6px)}.ch.bad{background:#ef444433;color:var(--bad);box-shadow:0 0 0 2px var(--bad)}
+.r{color:var(--bad)}.g{color:var(--y)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:10px 0}
+.stats div{background:#0c0d10;border:1px solid var(--ln);border-radius:10px;padding:8px 10px;font-size:12px;color:var(--mu)}.stats b{display:block;font-size:22px;color:#fff;font-family:ui-monospace,Menlo,monospace}
+.pend{min-height:30px;color:var(--x);font-size:22px;letter-spacing:4px}
+.say{min-height:52px;color:#fff}.say.ok{color:var(--y)}.say.no{color:var(--bad)}
+.ctl,.ir,.pre{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}.pre button{padding:4px 10px;font-family:ui-monospace,monospace}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}.cd{background:#0c0d10;border:1px solid var(--ln);border-radius:14px;padding:14px}.cd h4{margin:0 0 6px}
+.code{display:grid;grid-template-columns:1.1fr 1fr;gap:14px}@media(max-width:760px){.code{grid-template-columns:1fr}}
+pre{margin:0;background:#0c0d10;border:1px solid var(--ln);border-radius:14px;padding:12px;font:14px/1.7 ui-monospace,Menlo,Consolas,monospace;overflow-x:auto}
+pre span{display:block;padding:0 8px;border-radius:6px;cursor:pointer;white-space:pre}pre span.on{background:#3185ff33}.k{color:#c792ea}
+.note{border:2px solid var(--am);border-radius:14px;padding:14px;margin:16px 0}.note b{color:var(--am)}
+.res{font-size:15px;margin:6px 0}.pass{color:var(--y)}.fail{color:var(--bad)}
+.brand{text-align:center;padding:40px 0}.brand h3{font-size:34px;margin:0}
+</style></head><body>
+<nav><b>ShineExplains</b><a href="#problem">Problem</a><a href="#think">Think</a><a href="#viz">Visualize</a><a href="#code">Code</a><a href="#interview">Interview</a><span id="ch">Chapter 1 of 10</span><div id="pg"><i></i></div></nav>
+<main>
+
+<section id="problem" data-n="1"><h2><small>Chapter 1</small>The problem</h2>
+<p class="q">A string has only 'x' and 'y'. Can it be split into groups where each group has some x first, then exactly the same number of y?</p>
+<div class="panel"><div class="str" id="ex1"></div><button id="split" class="pri">Split into groups</button><div class="say" id="ex1t"></div></div>
+<p><b>Before code, ask: what must be true?</b></p></section>
+
+<section id="think" data-n="2"><h2><small>Chapter 2</small>First idea: count</h2>
+<p class="q">What is the simplest thing every valid string must satisfy?</p>
+<div class="ctl"><button data-a="eq">Equal number of x and y</button><button data-a="ne">Unequal number of x and y</button></div>
+<div class="say" id="a2"></div><button id="tst" class="pri" hidden>Test this idea</button></section>
+
+<section id="c3" data-n="3" hidden><h2><small>Chapter 3</small>Counts are not enough</h2>
+<div class="panel"><div class="str" id="ex3"></div><div class="stats"><div>count(x)<b class="x">2</b></div><div>count(y)<b class="y">2</b></div></div>
+<p class="g" style="font-size:30px;font-weight:800">2 = 2</p><button id="who" class="pri">Who can the first y match with?</button><div class="say" id="t3"></div></div></section>
+
+<section id="c4" data-n="4"><h2><small>Chapter 4</small>Balance</h2>
+<p>Every <b class="x">x</b> is a promise: a y must come later. Every <b class="y">y</b> pays one promise back.</p>
+<p><code>balance</code> = promises not yet paid (the blue dots). x: <code>balance++</code>. y: <code>balance--</code>. If balance goes below 0, a y had nothing to pay: stop and say false.</p>
+<div id="r4" class="panel"></div></section>
+
+<section id="code" data-n="5"><h2><small>Chapter 5</small>The code</h2>
+<p>Reveal line by line. Click a line to see why it is there.</p>
+<div class="ctl"><button id="nx" class="pri">Reveal next line</button><button id="rs">Reset</button></div>
+<div class="code"><pre id="cd"></pre><div class="panel" id="ex" style="margin:0">Press “Reveal next line”.</div></div>
+<div class="note"><b>Check before you submit.</b> This code accepts <code>xxyxyy</code> (balance 1 2 1 2 1 0, never negative, ends at 0), but that string is not a strict concatenation of x<sup>n</sup>y<sup>n</sup>. It is right when the rule is “every y needs an earlier unmatched x”, like matching brackets. If your judge wants strict x<sup>n</sup>y<sup>n</sup> groups, it needs one more rule.
+<div class="ctl"><button id="tr1">Run xxyxyy</button></div></div></section>
+
+<section id="viz" data-n="6"><h2><small>Chapter 6</small>Run it yourself</h2>
+<p>Type any string of x and y.</p><div id="r6" class="panel"></div></section>
+
+<section id="tests" data-n="7"><h2><small>Chapter 7</small>Test cases</h2>
+<div class="pre" id="tc"></div><button id="all" class="pri">Run all</button><div class="panel" id="tr">Pick a case.</div></section>
+
+<section data-n="8"><h2><small>Chapter 8</small>Complexity</h2>
+<div class="cards"><div class="cd"><h4>Time: O(N)</h4>One pass over the string.</div><div class="cd"><h4>Auxiliary space: O(1)</h4>Just one number, <code>balance</code>.</div></div></section>
+
+<section id="interview" data-n="9"><h2><small>Chapter 9</small>Interview check</h2><div id="qs"></div></section>
+
+<section data-n="10" style="border:0"><h2><small>Chapter 10</small>The whole idea</h2>
+<div class="cards"><div class="cd"><b class="x">x</b> adds a promise.</div><div class="cd"><b class="y">y</b> pays one back.</div><div class="cd">Balance below 0 means a y had no x: false.</div><div class="cd">At the end, balance must be 0.</div></div>
+<div class="brand"><p><b>UNDERSTAND WHAT MUST BE TRUE.<br>QUESTION YOUR ASSUMPTIONS.<br>DERIVE THE ALGORITHM.</b></p><h3>SHINEEXPLAINS</h3><p>WE TEACH YOU HOW TO THINK,<br>NOT JUST WHAT TO CODE.</p></div></section>
+</main>
+<script>
+const $=(s,e=document)=>e.querySelector(s),$$=(s,e=document)=>[...e.querySelectorAll(s)];
+/* Mirrors the supplied C++ exactly: balance++ on x, balance-- on y, false if negative, true only if balance==0 */
+function sim(s){let b=0,st=[],bad=false;
+ for(let i=0;i<s.length&&!bad;i++){const c=s[i],bf=b;let m;
+  if(c==='x'){b++;m=`x arrived: one more y will be needed. balance ${bf} → ${b}.`}
+  else{b--;m=`y arrived: it pays one pending x. balance ${bf} → ${b}.`;if(b<0){bad=true;m=`y arrived: balance ${bf} → ${b}. Negative, so no unmatched x was waiting. return false.`}}
+  st.push({c,i,bf,b,op:c==='x'?'balance++':'balance--',m,bad})}
+ let end='',ok=false;if(!bad){ok=b===0;end=ok?'End: balance is 0. return true.':`End: balance is ${b}, so ${b} x never got a y. return false.`}
+ return{st,ok,bad,end}}
+[['xxyy',1],['xy',1],['xxyyxy',1],['yxxy',0],['xyx',0],['xxxyyy',1],['xyyx',0],['xxy',0]].forEach(([s,e])=>console.assert(sim(s).ok===!!e,s));
+const chips=(s,cls=()=>'')=>[...s].map((c,i)=>`<span class="ch ${c} ${cls(i)}">${c}</span>`).join('');
+
+/* Step-through runner */
+function Runner(root,o){let s=o.s,res,k=-1,tm=null;
+ root.innerHTML=`<div class="ir"><input type="text" value="${s}" maxlength="24" aria-label="string of x and y" spellcheck="false"><button data-a="set">Load</button></div>
+ <div class="pre">${(o.pre||[]).map(p=>`<button data-p="${p}">${p}</button>`).join('')}</div>
+ <div class="str"></div><div class="pend" title="pending x"></div><div class="stats"></div><div class="say" aria-live="polite"></div>
+ <div class="ctl"><button data-a="prev">Previous</button><button data-a="next" class="pri">Next</button><button data-a="play">Play</button><button data-a="pause">Pause</button><button data-a="reset">Reset</button><select aria-label="speed"><option value="1500">Slow</option><option value="900" selected>Normal</option><option value="450">Fast</option></select></div>`;
+ const inp=$('input[type=text]',root),S=$('.str',root),P=$('.pend',root),T=$('.stats',root),Y=$('.say',root),sel=$('select',root);
+ const maxK=()=>res.bad?res.st.length-1:res.st.length;
+ function load(v){v=v.toLowerCase().replace(/\s/g,'');inp.value=v;if(!/^[xy]+$/.test(v)){Y.className='say no';Y.textContent='Use only the characters x and y (at least one).';return}
+  stop();s=v;res=sim(s);k=-1;draw()}
+ function draw(){const st=res.st,cur=k>=0&&k<st.length?st[k]:null;
+  S.innerHTML=chips(s,i=>(i>k?'dim':'')+(i===k?' cur':'')+(st[i]&&st[i].bad&&i<=k?' bad':''));
+  const bal=cur?cur.b:(k>=st.length&&st.length?st[st.length-1].b:0);
+  P.textContent='●'.repeat(Math.max(bal,0));
+  T.innerHTML=cur?`<div>Character<b class="${cur.c}">${cur.c}</b></div><div>Before<b>${cur.bf}</b></div><div>Operation<b>${cur.op}</b></div><div>After<b class="${cur.b<0?'r':''}">${cur.b}</b></div>`:`<div>balance<b>${bal}</b></div>`;
+  Y.className='say';
+  if(k<0)Y.textContent='Press Next to read the first character.';
+  else if(cur){Y.textContent=cur.m;if(cur.bad)Y.className='say no'}
+  else{Y.textContent=res.end;Y.className='say '+(res.ok?'ok':'no')}
+  $('[data-a=prev]',root).disabled=k<0;$('[data-a=next]',root).disabled=k>=maxK()}
+ function stop(){clearInterval(tm);tm=null}
+ function next(){if(k<maxK())k++;draw();if(k>=maxK())stop()}
+ root.onclick=e=>{const a=e.target.dataset.a,p=e.target.dataset.p;
+  if(p!==undefined)load(p);else if(a==='set')load(inp.value);else if(a==='next'){stop();next()}
+  else if(a==='prev'){stop();if(k>=0)k--;draw()}else if(a==='reset'){stop();k=-1;draw()}
+  else if(a==='pause')stop();else if(a==='play'){stop();if(k>=maxK())k=-1;next();tm=setInterval(next,+sel.value)}};
+ inp.onkeydown=e=>{if(e.key==='Enter')load(inp.value)};
+ sel.onchange=()=>{if(tm){stop();tm=setInterval(next,+sel.value)}};
+ load(s);return{load}}
+
+/* Chapters 1-3 */
+$('#ex1').innerHTML=chips('xxyyxy');
+$('#split').onclick=()=>{$('#ex1').innerHTML=chips('xxyyxy',i=>i===3?'cur':'');$('#ex1t').innerHTML='Group 1: <b class="x">2 x</b> then <b class="y">2 y</b>. Group 2: <b class="x">1 x</b> then <b class="y">1 y</b>. Split: xxyy | xy'};
+$$('[data-a=eq],[data-a=ne]').forEach(b=>b.onclick=()=>{const ok=b.dataset.a==='eq';$('#a2').className='say '+(ok?'ok':'no');
+ $('#a2').innerHTML=ok?'Yes. Each group has equal x and y, so the totals must match.<br><b class="q">But is equal count enough?</b>':'Not quite. Every group has equally many x and y, so the totals cannot differ. Try the other one.';$('#tst').hidden=!ok});
+$('#tst').onclick=()=>{$('#c3').hidden=false;$('#c3').scrollIntoView()};
+$('#ex3').innerHTML=chips('yxxy');
+$('#who').onclick=()=>{$('#ex3').innerHTML=chips('yxxy',i=>i===0?'bad':'');$('#t3').className='say no';$('#t3').innerHTML='No x came before it. Equal counts are necessary, but order matters too.'};
+Runner($('#r4'),{s:'xxyyxy',pre:['xxyyxy','yxxy']});
+const main=Runner($('#r6'),{s:'xxyyxy',pre:['xxyyxy','yxxy','xyx','xxxyyy']});
+
+/* Chapter 5: your code, revealed progressively */
+const CODE=[['bool findPattern(string& s) {',0],['    int balance=0;',1],['    for(int i=0;i<s.length();i++){',2],["        if(s[i]=='x'){",3],['            balance++;',4],["        }else if(s[i]=='y'){",5],['            balance--;',6],['        }',-1],['        if(balance<0)return false;',7],['    }',-1],['    if(balance==0)return true;',8],['    return false;',9],['}',-1]];
+const E=[
+['We get the string and answer true or false.','',''],
+['No x is waiting for a y yet.','Nothing to track, so no way to see a y with no x.','yxxy'],
+['Look at every character once, left to right.','Skipped characters hide mistakes.','xxyyxy'],
+['This character is an x.','','xy'],
+['One more y is now needed.','xy would fail: the y takes balance to −1.','xy'],
+['This character is a y.','','xy'],
+['This y pays back one waiting x.','Balance never falls: xxyy ends at 2 and is wrongly false.','xxyy'],
+['Balance below 0 means this y had no x before it. Stop now.','yxxy would end at 0 and be wrongly true.','yxxy'],
+['Balance 0 at the end: every x got a y.','xxy would be wrongly true.','xxy'],
+['Otherwise some x never got a y.','','xxy']];
+let rv=0,act=-1;
+function drawCode(){let show=-1;if(rv){show=CODE.findIndex(l=>l[1]===rv-1);while(show+1<CODE.length&&CODE[show+1][1]===-1)show++}
+ const hi=t=>t.replace(/\b(bool|int|for|if|else|return|false|true)\b/g,'\u0001$1\u0002').replace(/\u0001/g,'<b class="k">').replace(/\u0002/g,'</b>');
+ $('#cd').innerHTML=CODE.map((l,i)=>i<=show?`<span data-e="${l[1]}" class="${l[1]===act?'on':''}">${hi(l[0])}</span>`:'').join('');$('#nx').disabled=rv>=E.length}
+function showE(i){act=i;const e=E[i];$('#ex').innerHTML=`<b><code>${CODE.find(l=>l[1]===i)[0].trim()}</code></b><p>${e[0]}</p>${e[1]?`<p><b class="r">If removed:</b> ${e[1]}</p>`:''}${e[2]?`<button data-d="${e[2]}">Try “${e[2]}” in Chapter 6</button>`:''}`;drawCode()}
+$('#nx').onclick=()=>{rv++;showE(rv-1)};
+$('#rs').onclick=()=>{rv=0;act=-1;$('#ex').textContent='Press “Reveal next line”.';drawCode()};
+$('#cd').onclick=e=>{const sp=e.target.closest('span');if(sp&&+sp.dataset.e>=0)showE(+sp.dataset.e)};
+$('#ex').onclick=e=>{const d=e.target.dataset.d;if(d){main.load(d);$('#viz').scrollIntoView()}};
+$('#tr1').onclick=()=>{main.load('xxyxyy');$('#viz').scrollIntoView()};
+drawCode();
+
+/* Chapter 7 */
+const TC=[['xxyy',1],['xy',1],['xxyyxy',1],['yxxy',0],['xyx',0],['xxxyyy',1],['xyyx',0],['xxy',0]];
+$('#tc').innerHTML=TC.map((t,i)=>`<button data-i="${i}">${t[0]}</button>`).join('');
+function runCase(i){const[s,e]=TC[i],r=sim(s),okk=r.ok===!!e;
+ return `<div class="res"><b>${s}</b>: expected ${e?'true':'false'}, got ${r.ok?'true':'false'} <b class="${okk?'pass':'fail'}">${okk?'✓':'✗'}</b><br>${r.bad?r.st[r.st.length-1].m:r.end}</div>`}
+$('#tc').onclick=e=>{const i=e.target.dataset.i;if(i!==undefined)$('#tr').innerHTML=runCase(+i)};
+$('#all').onclick=()=>{$('#tr').innerHTML=TC.map((_,i)=>runCase(i)).join('')};
+
+/* Chapter 9 */
+const Q=[['Why is equal count(x) and count(y) not enough?','yxxy has 2 and 2, but the first y has no x before it. Counts ignore order.'],
+['Why return false the moment balance goes below 0?','A negative balance means a y arrived with no waiting x. A later x cannot help, because an x must come before the y it pays.'],
+['Why check balance==0 at the end?','Any balance above 0 means some x never got a y, like xxy.'],
+['Time and auxiliary space?','O(N) time (one pass), O(1) auxiliary space (one integer).']];
+$('#qs').innerHTML=Q.map((q,i)=>`<div class="panel"><p class="q">${i+1}. ${q[0]}</p><textarea aria-label="your answer ${i+1}" placeholder="Your answer"></textarea><button data-q="${i}">Submit</button><div class="say" hidden></div></div>`).join('');
+$('#qs').onclick=e=>{const i=e.target.dataset.q;if(i===undefined)return;const p=e.target.parentNode,d=$('.say',p);d.hidden=false;d.className='say ok';d.innerHTML=($('textarea',p).value.trim()?'Compare with your answer: ':'Here is the reasoning: ')+Q[i][1]};
+
+/* Progress */
+const secs=$$('section[data-n]');
+function prog(){const h=document.documentElement;$('#pg i').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight||1)*100)+'%';
+ let n=1;secs.forEach(s=>{if(!s.hidden&&s.getBoundingClientRect().top<innerHeight*.4)n=s.dataset.n});$('#ch').textContent='Chapter '+n+' of 10'}
+addEventListener('scroll',prog,{passive:true});prog();
+</script></body></html>
